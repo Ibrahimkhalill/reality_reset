@@ -13,7 +13,7 @@ def challenge_list_create(request):
     if request.method == 'GET':
         challenges = Challenge.objects.all()
         serializer = ChallengeSerializer(challenges, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'POST':
         serializer = ChallengeSerializer(data=request.data)
         if serializer.is_valid():
@@ -40,3 +40,33 @@ def challenge_detail(request, pk):
     elif request.method == 'DELETE':
         challenge.delete()
         return Response({"message": "Challenges deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+    
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  # ✅ use bracket
+def challenge_list(request):
+    if request.method == 'GET':
+        challenges = Challenge.objects.all().order_by('-created_at')
+        serializer = ChallengeSerializer(challenges, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+  
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def challenge_read(request, pk):
+    try:
+        challenge = Challenge.objects.get(pk=pk)
+        challenge.is_read = True
+        challenge.save()
+        serializer = ChallengeSerializer(challenge)
+        return Response({"message": "Read successfully done", "data": serializer.data}, status=status.HTTP_200_OK)
+    except Challenge.DoesNotExist:
+        raise Http404
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+   
+    
+       
+ 

@@ -2,6 +2,7 @@
 from django.urls import path 
 from .views import *
 from .feeling import *
+from .mood import *
 
 urlpatterns = [
 
@@ -13,5 +14,10 @@ urlpatterns = [
 
    path('save-feeling/', save_daily_feeling, name='save-feeling'),
    path('weekly-history/', get_weekly_history, name='weekly-history'),
+
+   #mood api
+
+    path('save-mood/', save_daily_mood, name='save-mood'),
+    path('weekly-mood-stats/', get_weekly_mood_statistics, name='weekly-mood-stats'),
   
 ]

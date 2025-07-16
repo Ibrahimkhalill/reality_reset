@@ -14,3 +14,11 @@ class DailyFeelingSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyFeeling
         fields = ['id', 'user', 'intensity', 'date', 'created_at']
+
+
+from .models import DailyMood
+
+class DailyMoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyMood
+        fields = ['id', 'user', 'mood', 'date', 'created_at']

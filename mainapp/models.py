@@ -21,3 +21,26 @@ class DailyFeeling(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.date} - {self.intensity}"
+
+
+
+
+
+
+class DailyMood(models.Model):
+    MOOD_CHOICES = [
+        ('low', 'Low'),
+        ('energized', 'Energized'),
+        ('hopeful', 'Hopeful'),
+        ('overwhelmed', 'Overwhelmed'),
+        ('frustrated', 'Frustrated'),
+        ('drained', 'Drained'),
+        ('disconnected', 'Disconnected'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mood = models.CharField(max_length=20, choices=MOOD_CHOICES)
+    date = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.mood} - {self.date}"

@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'quote',
     'boost',
     'mainapp',
-    'ckeditor'
+    'ckeditor',
+    'chat'
    
 ]
 
